@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-// import { CommonModule } from '@angular/common';
+
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
+interface Cliente {
+  idade: number,
+  nome: string
+}
 
 @Component({
   selector: 'app-root',
@@ -11,6 +18,15 @@ import { RouterModule } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
-  title = 'angular-standalone';
+
+  item$?: Observable<Cliente[]>;
+  firestore: Firestore = inject(Firestore);
+ 
+  constructor(){
+    const itemCollection = collection(this.firestore, 'clientes');
+    // this.item$ = collectionData();
+  }
+  
 }
